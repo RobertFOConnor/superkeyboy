@@ -20,6 +20,10 @@ public class LeaderboardManager {
         HttpRequestBuilder builder = new HttpRequestBuilder();
         Net.HttpRequest request = builder.newRequest().method(Net.HttpMethods.GET).url(LEADERBOARD_URL).build();
         request.setHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.setHeader("Access-Control-Allow-Origin", "*");
+        request.setHeader("Access-Control-Expose-Headers", "*");
+        request.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        request.setMethod(Net.HttpMethods.GET);
 
 
         Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
@@ -90,6 +94,9 @@ public class LeaderboardManager {
         HttpRequestBuilder builder = new HttpRequestBuilder();
         Net.HttpRequest request = builder.newRequest().method(Net.HttpMethods.GET).url(LEADERBOARD_URL).build();
         request.setHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.setHeader("Access-Control-Allow-Origin", "*");
+        request.setHeader("Access-Control-Expose-Headers", "*");
+        request.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 
 
         Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {

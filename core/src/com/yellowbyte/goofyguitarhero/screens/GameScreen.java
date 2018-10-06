@@ -74,8 +74,23 @@ public class GameScreen extends Screen {
         particles = new ParticleManager();
         audience = new Audience();
 
-        LeaderboardManager lm = new LeaderboardManager();
-        lm.getScores();
+        final LeaderboardManager lm = new LeaderboardManager();
+
+
+        final Timer timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                if (LeaderboardManager.scoreItems.size() > 0) {
+                    timer.stop();
+                    timer.clear();
+                } else {
+                    lm.getScores();
+                    System.out.println("Trying to fetch scores");
+                }
+            }
+        }, 0, 3f);
+        timer.start();
     }
 
     private Texture getTexture(String path) {
@@ -259,13 +274,14 @@ public class GameScreen extends Screen {
             UIFont.draw(sb, "(press enter)", MainGame.WIDTH / 2 - 160, MainGame.HEIGHT - 370);
             UIFont.setColor(Color.WHITE);
 
-            scoresFont.draw(sb, "", 20, MainGame.HEIGHT - 50 - (i * 40));
+            scoresFont.draw(sb, "Leaderboard", 30, MainGame.HEIGHT - 50);
 
             //TODO fix score display.
             if (LeaderboardManager.scoreItems.size() > 0) {
                 ArrayList<LeaderboardManager.ScoreItem> scores = LeaderboardManager.scoreItems;
                 for (int i = 0; i < scores.size(); i++) {
-                    scoresFont.draw(sb, String.format("%8s: %10d", scores.get(i).name, scores.get(i).score), 20, MainGame.HEIGHT - 50 - (i * 40));
+                    scoresFont.draw(sb, scores.get(i).name + ": " + scores.get(i).score, 30, MainGame.HEIGHT - 100 - (i * 40))
+                    ;
                 }
             }
         }
